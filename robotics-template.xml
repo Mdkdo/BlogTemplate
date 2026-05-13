@@ -370,6 +370,83 @@
               </b:includable>
             </b:widget>
 
+            <b:widget id='HTML1' locked='false' title='Générateur Wokwi AI' type='HTML'>
+              <b:includable id='main'>
+                <div class='widget' id='wokwi-generator'>
+                  <h2><i class='fa-solid fa-microchip'></i> Générateur Wokwi AI</h2>
+                  <p style='font-size: 0.85rem; margin-bottom: 15px;'>Préparez votre prompt pour l'IA et générez votre circuit Wokwi instantanément.</p>
+
+                  <div style='margin-bottom: 15px;'>
+                    <label style='display: block; font-size: 0.8rem; margin-bottom: 5px; font-weight: 600;'>Schéma demandé :</label>
+                    <textarea id='wokwi-schema' placeholder='Ex: 3 LEDs clignotantes avec boutons...' style='width: 100%; height: 80px; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-color); color: var(--text-color); font-family: inherit;'></textarea>
+                  </div>
+
+                  <div style='margin-bottom: 15px;'>
+                    <label style='display: block; font-size: 0.8rem; margin-bottom: 5px; font-weight: 600;'>Code demandé :</label>
+                    <textarea id='wokwi-code' placeholder='Ex: Code C++ avec gestion des interruptions...' style='width: 100%; height: 80px; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-color); color: var(--text-color); font-family: inherit;'></textarea>
+                  </div>
+
+                  <button class='btn' onclick='generateWokwiPrompt()' style='width: 100%; border: none; cursor: pointer;'>
+                    <i class='fa-solid fa-wand-magic-sparkles'></i> PRÉPARER LE PROMPT
+                  </button>
+
+                  <div id='wokwi-output-container' style='display: none; margin-top: 20px; padding-top: 20px; border-top: 1px dashed var(--border-color);'>
+                    <label style='display: block; font-size: 0.8rem; margin-bottom: 5px; font-weight: 600;'>Prompt généré :</label>
+                    <div style='position: relative;'>
+                      <pre id='wokwi-output' style='font-size: 0.75rem; background: #020617; color: #38bdf8; padding: 15px; border-radius: 8px; white-space: pre-wrap; word-break: break-all; margin: 0;'></pre>
+                      <button onclick='copyWokwiOutput()' style='position: absolute; top: 10px; right: 10px; background: #1e293b; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.7rem;'>
+                        <i class='fa-solid fa-copy'></i> Copier
+                      </button>
+                    </div>
+                    <p style='font-size: 0.75rem; margin-top: 10px; color: var(--accent-color);'>Copiez ce prompt et utilisez-le avec votre IA préférée (ChatGPT, Claude, etc.)</p>
+                  </div>
+                </div>
+
+                <script>
+                  function generateWokwiPrompt() {
+                    const schema = document.getElementById('wokwi-schema').value || "Schéma standard Arduino Uno";
+                    const code = document.getElementById('wokwi-code').value || "Code de base";
+
+                    const prompt = `Tu es un générateur de circuits Wokwi.
+
+Génère UNIQUEMENT un JSON valide pour Wokwi avec :
+- Arduino Uno
+- composants nécessaires
+- connexions correctes
+
++ Génère aussi le code Arduino
+
+Format EXACT :
+
+{
+  "circuit": { ...JSON Wokwi... },
+  "code": "...code Arduino..."
+}
+
+Contraintes :
+- utiliser wokwi-arduino-uno
+- ajouter résistances pour LEDs
+- utiliser noms clairs
+- connexions valides
+
+Demande utilisateur :
+{{- schéma d'un circuit: ${schema};
+  - code: ${code} }}`;
+
+                    document.getElementById('wokwi-output').textContent = prompt;
+                    document.getElementById('wokwi-output-container').style.display = 'block';
+                  }
+
+                  function copyWokwiOutput() {
+                    const text = document.getElementById('wokwi-output').textContent;
+                    navigator.clipboard.writeText(text).then(() => {
+                      alert('Prompt copié !');
+                    });
+                  }
+                </script>
+              </b:includable>
+            </b:widget>
+
             <b:widget id='Text1' locked='false' title='État du Lab' type='Text'>
               <b:includable id='main'>
                 <div class='widget'>
