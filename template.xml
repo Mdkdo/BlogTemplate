@@ -272,30 +272,47 @@
               <b:includable id='main' var='top'>
                 <div class='blog-posts'>
                   <b:loop values='data:posts' var='post'>
-                    <article class='post-card'>
-                      <b:if cond='data:post.firstImageUrl'>
-                        <div class='post-thumbnail' expr:style='&quot;background-image:url(&quot; + data:post.firstImageUrl + &quot;)&quot;'/>
-                      <b:else/>
-                        <div class='post-thumbnail' style='background-image:url(https://via.placeholder.com/400x250?text=No+Image)'/>
-                      </b:if>
-                      <div class='post-content'>
-                        <div class='post-meta'>
+                    <b:if cond='data:blog.pageType in {&quot;index&quot;, &quot;archive&quot;}'>
+                      <!-- List View (Homepage/Search/Archive) -->
+                      <article class='post-card'>
+                        <b:if cond='data:post.firstImageUrl'>
+                          <div class='post-thumbnail' expr:style='&quot;background-image:url(&quot; + data:post.firstImageUrl + &quot;)&quot;'/>
+                        <b:else/>
+                          <div class='post-thumbnail' style='background-image:url(https://via.placeholder.com/400x250?text=No+Image)'/>
+                        </b:if>
+                        <div class='post-content'>
+                          <div class='post-meta'>
+                            <span><i class='fa-regular fa-calendar'></i> <data:post.dateHeader/></span>
+                            <span><i class='fa-regular fa-user'></i> <data:post.author/></span>
+                          </div>
+                          <h2 class='post-title'>
+                            <a expr:href='data:post.url'><data:post.title/></a>
+                          </h2>
+                          <div class='post-snippet'>
+                            <data:post.snippet/>
+                          </div>
+                          <a class='vibrant-btn' expr:href='data:post.url' style='margin-top: 15px; font-size: 0.9rem;'>Lire la suite</a>
+                        </div>
+                      </article>
+                    <b:else/>
+                      <!-- Item View (Single Post/Static Page) -->
+                      <article class='post-full' style='background: var(--card-bg); padding: 40px; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.05);'>
+                        <div class='post-meta' style='margin-bottom: 20px;'>
                           <span><i class='fa-regular fa-calendar'></i> <data:post.dateHeader/></span>
                           <span><i class='fa-regular fa-user'></i> <data:post.author/></span>
                         </div>
-                        <h2 class='post-title'>
-                          <a expr:href='data:post.url'><data:post.title/></a>
-                        </h2>
-                        <div class='post-snippet'>
-                          <data:post.snippet/>
+                        <h1 class='post-title' style='font-size: 2.5rem; margin-bottom: 30px;'><data:post.title/></h1>
+                        <div class='post-body entry-content'>
+                          <data:post.body/>
                         </div>
-                        <a class='vibrant-btn' expr:href='data:post.url' style='margin-top: 15px; font-size: 0.9rem;'>Lire la suite</a>
-                      </div>
-                    </article>
+                      </article>
+                    </b:if>
                   </b:loop>
                 </div>
                 <!-- Pagination -->
-                <b:include name='nextprev'/>
+                <b:if cond='data:blog.pageType in {&quot;index&quot;, &quot;archive&quot;}'>
+                  <b:include name='nextprev'/>
+                </b:if>
               </b:includable>
 
               <b:includable id='nextprev'>

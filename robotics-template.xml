@@ -310,23 +310,45 @@
               <b:includable id='main' var='top'>
                 <div class='posts-container'>
                   <b:loop values='data:posts' var='post'>
-                    <article class='post-card'>
-                      <b:if cond='data:post.firstImageUrl'>
-                        <div class='post-image' expr:style='&quot;background-image:url(&quot; + data:post.firstImageUrl + &quot;)&quot;'/>
-                      <b:else/>
-                        <div class='post-image' style='background-image:url(https://images.unsplash.com/photo-1531746790731-6c087fdec674?auto=format&amp;fit=crop&amp;q=80&amp;w=800)'/>
-                      </b:if>
-                      <div class='post-info'>
-                        <span class='post-tag'><i class='fa-solid fa-code'></i> Lab</span>
-                        <h2 class='post-title'><a expr:href='data:post.url'><data:post.title/></a></h2>
-                        <div class='post-snippet' style='margin-bottom: 20px; font-size: 0.95rem; opacity: 0.8;'>
-                          <data:post.snippet/>
+                    <b:if cond='data:blog.pageType in {&quot;index&quot;, &quot;archive&quot;}'>
+                      <!-- List View -->
+                      <article class='post-card'>
+                        <b:if cond='data:post.firstImageUrl'>
+                          <div class='post-image' expr:style='&quot;background-image:url(&quot; + data:post.firstImageUrl + &quot;)&quot;'/>
+                        <b:else/>
+                          <div class='post-image' style='background-image:url(https://images.unsplash.com/photo-1531746790731-6c087fdec674?auto=format&amp;fit=crop&amp;q=80&amp;w=800)'/>
+                        </b:if>
+                        <div class='post-info'>
+                          <span class='post-tag'><i class='fa-solid fa-code'></i> Lab</span>
+                          <h2 class='post-title'><a expr:href='data:post.url'><data:post.title/></a></h2>
+                          <div class='post-snippet' style='margin-bottom: 20px; font-size: 0.95rem; opacity: 0.8;'>
+                            <data:post.snippet/>
+                          </div>
+                          <a class='btn' expr:href='data:post.url'>LIRE PLUS</a>
                         </div>
-                        <a class='btn' expr:href='data:post.url'>LIRE PLUS</a>
-                      </div>
-                    </article>
+                      </article>
+                    <b:else/>
+                      <!-- Item View -->
+                      <article class='post-full' style='background: var(--card-bg); padding: 30px; border-radius: 8px; border: 1px solid var(--border-color);'>
+                        <h1 class='post-title' style='font-size: 2.5rem; margin-bottom: 20px;'><data:post.title/></h1>
+                        <div class='post-body entry-content'>
+                          <data:post.body/>
+                        </div>
+                      </article>
+                    </b:if>
                   </b:loop>
                 </div>
+                <!-- Pagination -->
+                <b:if cond='data:blog.pageType in {&quot;index&quot;, &quot;archive&quot;}'>
+                  <div class='blog-pager' style='margin-top: 30px; text-align: center;'>
+                    <b:if cond='data:newerPageUrl'>
+                      <a class='btn' expr:href='data:newerPageUrl'>Plus récents</a>
+                    </b:if>
+                    <b:if cond='data:olderPageUrl'>
+                      <a class='btn' expr:href='data:olderPageUrl'>Plus anciens</a>
+                    </b:if>
+                  </div>
+                </b:if>
               </b:includable>
             </b:widget>
           </b:section>
