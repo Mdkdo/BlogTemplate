@@ -313,7 +313,9 @@
                     <b:if cond='data:blog.pageType in {&quot;index&quot;, &quot;archive&quot;}'>
                       <!-- List View -->
                       <article class='post-card'>
-                        <b:if cond='data:post.firstImageUrl'>
+                        <b:if cond='data:post.featuredImage'>
+                          <div class='post-image' expr:style='&quot;background-image:url(&quot; + resizeImage(data:post.featuredImage, 600, &quot;600:400&quot;) + &quot;)&quot;'/>
+                        <b:elseif cond='data:post.firstImageUrl'/>
                           <div class='post-image' expr:style='&quot;background-image:url(&quot; + data:post.firstImageUrl + &quot;)&quot;'/>
                         <b:else/>
                           <div class='post-image' style='background-image:url(https://images.unsplash.com/photo-1531746790731-6c087fdec674?auto=format&amp;fit=crop&amp;q=80&amp;w=800)'/>

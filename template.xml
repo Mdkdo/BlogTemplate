@@ -275,7 +275,9 @@
                     <b:if cond='data:blog.pageType in {&quot;index&quot;, &quot;archive&quot;}'>
                       <!-- List View (Homepage/Search/Archive) -->
                       <article class='post-card'>
-                        <b:if cond='data:post.firstImageUrl'>
+                        <b:if cond='data:post.featuredImage'>
+                          <div class='post-thumbnail' expr:style='&quot;background-image:url(&quot; + resizeImage(data:post.featuredImage, 400, &quot;400:250&quot;) + &quot;)&quot;'/>
+                        <b:elseif cond='data:post.firstImageUrl'/>
                           <div class='post-thumbnail' expr:style='&quot;background-image:url(&quot; + data:post.firstImageUrl + &quot;)&quot;'/>
                         <b:else/>
                           <div class='post-thumbnail' style='background-image:url(https://via.placeholder.com/400x250?text=No+Image)'/>
